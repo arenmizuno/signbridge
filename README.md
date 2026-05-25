@@ -1,37 +1,35 @@
-# SignBridge — ASL Translation Using Deep Learning
+# SignBridge
 
-## Overview
+## ADSP 31018 – Machine Learning II
+### Final Project – University of Chicago  
 
-SignBridge is a deep learning project focused on real-time American Sign Language (ASL) translation using hand and body landmark sequences extracted from video. The project explores multiple neural network architectures for sequence classification and aims to build a deployable live translation system using MediaPipe landmarks and optimized neural network inference.
-
-The project was developed using PyTorch, Transformer architectures, temporal convolutional networks (TCNs), recurrent models, and hybrid CNN-attention systems.
-
----
-
-# Project Goals
-
-The primary objectives of this project were:
-
-- Build a scalable ASL sequence classification pipeline
-- Process landmark-based sign language data into trainable tensors
-- Experiment with multiple sequence modeling architectures
-- Compare CNNs, Transformers, GRUs, and TCNs
-- Train models on both partial and full datasets
-- Export deployable models for real-time inference
-- Build the foundation for a live translation application using MediaPipe
+**Instructor:** Batuhan Gundogdu, Gregory Green  
+**Term:** Spring 2026  
 
 ---
 
-# Dataset
+## Team Members
 
-The project uses the ASL Signs dataset containing:
+- Aren Mizuno  
+- Arthur Acker
+- Jaysen Jensen 
+- Lawrence Lin  
 
-- 250 sign classes
-- Landmark sequences extracted from sign videos
-- Hand, face, and pose keypoints
-- Variable-length temporal sequences
+---
 
-The dataset was preprocessed into fixed-length tensors suitable for sequence modeling.
+# Overview
+
+SignBridge is a deep learning project focused on American Sign Language (ASL) translation using landmark-based sequence modeling. The project explores multiple neural network architectures for temporal sign classification using MediaPipe landmark sequences extracted from video.
+
+The repository includes:
+- Full preprocessing and dataset generation pipelines
+- Exploratory data analysis workflows
+- Partial and full dataset model training
+- Transformer-based sequence modeling
+- ONNX export and deployment preparation
+- Real-time inference preparation using MediaPipe
+
+The project was developed using PyTorch, Transformers, CNNs, GRUs, TCNs, and hybrid sequence architectures.
 
 ---
 
@@ -48,17 +46,18 @@ SignBridge/
 │   └── 04_Transformer_Full_Training.ipynb
 │
 ├── data/
-│   ├── raw/
+│   ├── external/
 │   └── processed/
+│   
 │
 ├── models/
 │   ├── checkpoints/
+│   ├── logs/
 │   ├── onnx/
 │   └── torchscript/
 │
 ├── results/
 │   ├── graphs/
-│   ├── metrics/
 │   ├── reports/
 │   └── tables/
 │
@@ -67,53 +66,109 @@ SignBridge/
 
 ---
 
+# Dataset
+
+This project uses the Kaggle ASL Signs competition dataset.
+
+Dataset:
+- 250 ASL sign classes
+- Landmark-based temporal sequences
+- Hand, pose, and facial keypoints
+- Variable-length sign sequences
+
+Kaggle Competition:
+- ASL Signs Dataset
+- https://www.kaggle.com/competitions/asl-signs
+
+---
+
+# Important Repository Notes
+
+Large datasets and trained model checkpoints are **not included** in this GitHub repository due to GitHub file size limitations.
+
+The following folders are excluded from version control:
+
+```text
+data/
+models/checkpoints/
+models/onnx/
+models/torchscript/
+```
+
+These directories contain:
+- Processed `.npz` and `.npy` arrays
+- Full PyTorch checkpoints (`.pt`)
+- ONNX deployment exports
+- Quantized inference models
+
+---
+
+# Reproducing the Dataset
+
+To regenerate the processed dataset:
+
+1. Download the Kaggle ASL Signs dataset
+2. Place the zip of the dataset into:
+
+```text
+data/external/
+```
+
+3. Run:
+
+```text
+src/00_Preprocessing.ipynb
+```
+
+The preprocessing notebook will:
+- Clean landmark sequences
+- Normalize features
+- Generate train/validation/test splits
+- Save processed arrays
+- Create metadata and label mappings
+
+Processed outputs will be saved into:
+
+```text
+data/processed/
+```
+
+---
+
 # Pipeline Overview
 
 ## 1. Preprocessing
 
-Notebook: `00_Preprocessing.ipynb`
+Notebook:
+```text
+src/00_Preprocessing.ipynb
+```
 
 The preprocessing pipeline:
-
-- Loads raw landmark sequence data
+- Loads raw landmark sequences
 - Cleans invalid samples
-- Handles variable sequence lengths
-- Pads sequences to fixed length
-- Generates train/validation/test splits
-- Saves processed `.npz` and `.npy` arrays
-- Stores metadata and label mappings
-
-### Key Features
-
-- Participant-aware splitting
-- Removal of labels missing in validation/test sets
-- Sequence normalization
-- Length tracking for masking and pooling
+- Pads variable-length sequences
+- Normalizes landmark features
+- Creates participant-aware splits
+- Saves processed training arrays
 
 ---
 
-## 2. Exploratory Data Analysis (EDA)
+## 2. Exploratory Data Analysis
 
-Notebook: `01_EDA.ipynb`
+Notebook:
+```text
+src/01_EDA.ipynb
+```
 
-EDA focused on understanding:
+EDA includes:
+- Class balance analysis
+- Sequence length visualization
+- Missing value inspection
+- Split validation
+- Landmark feature analysis
 
-- Class balance
-- Sequence length distributions
-- Missing values
-- Landmark feature distributions
-- Sign frequency
-- Dataset split quality
-
-### Outputs
-
-- Histograms
-- Distribution plots
-- Sequence statistics
-- Class frequency graphs
-- Summary tables
-
-All outputs are saved into:
+Outputs are saved into:
 
 ```text
 results/graphs/
@@ -122,82 +177,20 @@ results/tables/
 
 ---
 
-# Modeling Approaches
+## 3. Partial Dataset Training
 
-The project explored several deep learning architectures for sequence classification.
+Notebook:
+```text
+src/02_Partial_Model_Training.ipynb
+```
 
----
-
-## CNN Models
-
-Convolutional models were used to capture local temporal motion patterns.
-
-### Features
-
-- Depthwise separable convolutions
-- Residual blocks
-- Large kernel temporal convolutions
-- Dilated convolutions
-- Temporal pooling
-
-### Motivation
-
-CNNs performed extremely well because sign language contains strong local temporal structure and repetitive movement patterns.
-
----
-
-## GRU / Recurrent Models
-
-GRU-based models were used to capture long-term temporal dependencies.
-
-### Features
-
-- Bidirectional GRUs
-- Sequence pooling
-- Hybrid CNN + GRU models
-
----
-
-## Transformer Models
-
-Transformers were introduced to model global temporal relationships.
-
-### Features
-
-- Multi-head self-attention
-- Positional embeddings
-- Layer normalization
-- Feedforward attention blocks
-- Hybrid CNN + Transformer architectures
-
----
-
-## Temporal Convolutional Networks (TCNs)
-
-TCNs provided an alternative sequence modeling approach using:
-
-- Dilated convolutions
-- Residual temporal blocks
-- Large receptive fields
-- Efficient parallel training
-
----
-
-# Partial Dataset Experiments
-
-Notebook: `02_Partial_Model_Training.ipynb`
-
-Before training on all 250 signs, models were tested on smaller subsets.
-
-### Purpose
-
+Used for:
 - Faster experimentation
 - Architecture comparison
 - Hyperparameter tuning
-- Stability checks
+- Stability testing
 
-### Models Tested
-
+Models explored:
 - MLP
 - CNN
 - LSTM
@@ -207,157 +200,96 @@ Before training on all 250 signs, models were tested on smaller subsets.
 - CNN + Transformer
 - TCN
 
-### Evaluation Metrics
+---
 
-- Top-1 Accuracy
-- Top-5 Accuracy
-- Top-10 Accuracy
-- Classification reports
-- Per-class F1 scores
+## 4. Full Dataset Training
+
+Notebook:
+```text
+src/03_Full_Model_Training.ipynb
+```
+
+Final large-scale training on the complete 250-sign dataset.
+
+Primary architectures:
+- CNN
+- CNN + GRU
+- TCN
+- Transformer
 
 ---
 
-# Full Dataset Training
+## 5. Transformer Full Training
 
-Notebook: `03_Full_Model_Training.ipynb`
+Notebook:
+```text
+src/04_Transformer_Full_Training.ipynb
+```
 
-The strongest architectures from partial experiments were scaled to the full 250-sign dataset.
-
-### Final Models
-
-- Strong CNN
-- Strong CNN + GRU
-- Strong Transformer
-- Strong TCN
-
-### Improvements
-
-- Larger hidden dimensions
-- Stronger augmentation
-- Label smoothing
-- Cosine learning rate scheduling
-- Larger receptive fields
-- Better regularization
-
----
-
-# Advanced Transformer Training
-
-Notebook: `04_Transformer_Full_Training.ipynb`
-
-This notebook focused on advanced attention-based architectures.
-
-### Focus Areas
-
+Focused on:
+- Transformer encoder architectures
+- Attention-based temporal modeling
 - CNN + Transformer hybrids
-- Larger Transformer encoders
-- Improved positional embeddings
-- Hybrid local/global temporal modeling
+- ONNX export and deployment preparation
 
 ---
 
 # Data Augmentation
 
-The project used several augmentation techniques:
+The project uses several augmentation methods:
 
-## Time Stretching
+- Temporal stretching
+- Gaussian landmark noise
+- Random frame dropout
+- Sequence masking
 
-Randomly compressing or expanding temporal sequences.
-
-## Gaussian Noise
-
-Small random perturbations added to landmark coordinates.
-
-## Frame Dropout
-
-Random frame masking to improve robustness.
+These augmentations improve robustness to signer variation and temporal inconsistencies.
 
 ---
 
 # Evaluation
 
-Models were evaluated using:
-
-- Validation Top-1 Accuracy
-- Test Top-1 Accuracy
-- Test Top-5 Accuracy
-- Test Top-10 Accuracy
+Models are evaluated using:
+- Top-1 Accuracy
+- Top-5 Accuracy
 - Precision / Recall / F1
 - Confusion matrices
+- Per-class accuracy analysis
 
----
-
-# Saved Outputs
-
-## Graphs
-
-Saved to:
-
-```text
-results/graphs/
-```
-
-Examples:
-
-- Loss curves
-- Accuracy curves
-- Confusion matrices
-- Confidence distributions
-- Per-class F1 charts
-
----
-
-## Metrics and Reports
-
-Saved to:
+Outputs are saved into:
 
 ```text
 results/reports/
-results/metrics/
 results/tables/
+results/graphs/
 ```
-
-Examples:
-
-- Classification reports
-- Per-class metrics
-- Ablation tables
-- Training summaries
 
 ---
 
 # Model Exporting
 
-The project supports multiple export formats for deployment.
-
-## TorchScript
-
-Used for PyTorch deployment and mobile compatibility.
+The repository supports multiple deployment formats.
 
 ## ONNX
+Used for optimized inference and cross-platform deployment.
 
-Used for cross-platform inference and optimized runtimes.
+## TorchScript
+Used for PyTorch deployment compatibility.
 
 ## Quantization
-
-Dynamic quantization was explored to:
-
-- Reduce model size
-- Improve CPU inference speed
-- Enable mobile deployment
+Dynamic quantization was explored for:
+- Smaller model size
+- Faster CPU inference
+- Mobile deployment support
 
 ---
 
-# Live Translation System
-
-The long-term objective is a real-time sign language translation application.
-
-## Planned Pipeline
+# Planned Real-Time Pipeline
 
 ```text
 Webcam
    ↓
-OpenCV Video Frames
+OpenCV Frames
    ↓
 MediaPipe Landmark Extraction
    ↓
@@ -372,72 +304,31 @@ Live Translation UI
 
 ---
 
-# MediaPipe Integration
-
-MediaPipe is used to extract:
-
-- Hand landmarks
-- Pose landmarks
-- Face landmarks
-
-These landmarks are converted into tensors matching the training format used by the models.
-
----
-
 # Technologies Used
 
-## Core Libraries
-
+## Deep Learning
 - PyTorch
+- Transformers
+- Temporal CNNs
+- GRUs / LSTMs
+
+## Data Processing
 - NumPy
 - Pandas
 - Scikit-learn
+
+## Visualization
 - Matplotlib
 
 ## Computer Vision
-
 - OpenCV
 - MediaPipe
 
 ## Deployment
-
 - ONNX Runtime
 - TorchScript
 
 ---
 
-# Current Status
-
-The repository currently includes:
-
-- Full preprocessing pipeline
-- EDA workflow
-- Multiple model architectures
-- Full training pipelines
-- Export utilities
-- Evaluation framework
-- Deployment preparation
-
-Additional official results and finalized metrics will be added after retraining and standardized evaluation.
 
 ---
-
-# Future Improvements
-
-Planned future work includes:
-
-- Official participant-level cross-validation
-- Real-time inference application
-- Sentence-level translation
-- Language modeling
-- Beam search decoding
-- Mobile deployment
-- Transformer scaling
-- Landmark feature engineering
-- Faster inference optimization
-
----
-
-# Notes
-
-Some experimental results and metrics are still preliminary and will be updated after standardized retraining and evaluation. The repository structure and pipelines are finalized, but official benchmark numbers are still being regenerated.
