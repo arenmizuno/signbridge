@@ -209,7 +209,7 @@ Notebook:
 src/02_Partial_Model_Training.ipynb
 ```
 
-This notebook was used as an experimental benchmarking environment before full-scale training on the complete 250-sign dataset.
+This notebook was used for rapid benchmarking, architecture comparison, hyperparameter tuning, and stability testing on a smaller 25-sign subset before full-scale 250-sign training.
 
 The notebook focuses on:
 - Rapid architecture experimentation
@@ -322,7 +322,7 @@ Full training results:
 
 | Model | Best Val Top-1 | Test Top-1 | Test Top-5 | Test Top-10 | Parameters | Train Time | Key Finding |
 |---|---:|---:|---:|---:|---:|---:|---|
-| Transformer | **59.10%** | **67.95%** | 86.21% | 89.76% | 6,077,690 | 154.77 min | Best overall Top-1 accuracy, but highest training cost |
+| Transformer | **59.10%** | **67.95%** | **86.21%** | 89.76% | 6,077,690 | 154.77 min | Best overall Top-1 accuracy, but highest training cost |
 | TCN | 58.06% | 66.26% | 85.69% | 90.04% | 1,269,370 | 44.99 min | Strong temporal performance with efficient training |
 | CNN | 58.33% | 65.19% | 86.07% | **90.51%** | 1,269,370 | 43.69 min | Best Top-10 accuracy and strong efficiency |
 | CNN_GRU | 57.60% | 62.97% | 83.65% | 88.52% | 5,548,666 | 133.82 min | Captures temporal dependencies but underperformed relative to simpler models |
