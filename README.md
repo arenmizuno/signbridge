@@ -268,8 +268,9 @@ Based on the partial training experiments, the following architectures were prio
 | 4 | Transformer | Strong attention-based modeling for long-range temporal relationships |
 
 These architectures were further explored in:
-
+```text
 src/03_Full_Model_Training.ipynb
+```
 
 Outputs generated:
 - Training history logs
