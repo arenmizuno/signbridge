@@ -196,10 +196,10 @@ EDA visualizations:
 - Landmark variability analysis
 
 Outputs are saved into:
-
+```text
 results/graphs/
 results/tables/
-
+```
 ---
 
 ## 3. Partial Dataset Training
@@ -279,13 +279,13 @@ Outputs generated:
 - Model checkpoints
 
 Outputs are saved into:
-
+```text
 models/checkpoints/
 models/logs/
 results/graphs/
 results/tables/
 results/reports/
-
+```
 ---
 
 ## 4. Full Dataset Training
@@ -343,14 +343,14 @@ Outputs generated:
 - ONNX deployment exports
 
 Outputs are saved into:
-
+```text
 models/checkpoints/
 models/logs/
 models/onnx/
 results/graphs/
 results/tables/
 results/reports/
-
+```
 ---
 
 ## 5. Transformer Full Training
@@ -423,12 +423,12 @@ Outputs generated:
 - Quantized ONNX export
 
 Outputs are saved into:
-
+```text
 models/checkpoints/
 models/onnx/
 results/graphs/
 results/reports/
-
+```
 ---
 
 # Evaluation
