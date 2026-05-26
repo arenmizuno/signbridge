@@ -90,7 +90,6 @@ The following folders are excluded from version control:
 data/
 models/checkpoints/
 models/onnx/
-models/torchscript/
 ```
 
 These directories contain:
