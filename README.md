@@ -52,8 +52,7 @@ SignBridge/
 ├── models/
 │   ├── checkpoints/
 │   ├── logs/
-│   ├── onnx/
-│   └── torchscript/
+│   └── onnx/
 │
 ├── results/
 │   ├── graphs/
