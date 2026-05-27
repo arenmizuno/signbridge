@@ -144,14 +144,17 @@ Notebook:
 ```text
 src/00_Preprocessing.ipynb
 ```
+The preprocessing pipeline converts the raw Kaggle ASL Signs landmark data into fixed-size numerical sequences that can be used for model training.
 
-The preprocessing pipeline:
-- Loads raw landmark sequences
-- Cleans invalid samples
-- Pads variable-length sequences
-- Normalizes landmark features
-- Creates participant-aware splits
-- Saves processed training arrays
+The raw dataset contains frame-by-frame MediaPipe landmark coordinates for each signing sequence. Each sample is first loaded from its corresponding parquet file, then filtered to keep only the most relevant landmarks for sign recognition. Instead of using every available landmark, the pipeline focuses on key facial landmarks, especially around the mouth and eyes, along with both left and right hand landmarks. This reduces noise while preserving the features most important for ASL classification.
+
+Each sequence is transformed from a long landmark format into a wide frame-based format, where every row represents a video frame and every column represents a specific landmark coordinate. Missing landmark values are handled using interpolation, forward filling, and backward filling so that short tracking gaps do not remove otherwise useful samples. Sequences with too many missing hand detections are discarded because they do not contain enough reliable signing information.
+
+The preprocessing step also normalizes hand positions to reduce variation between different signers, camera positions, and signing locations. In particular, hand landmarks are centered relative to the wrist and scaled by hand size, making the model focus more on hand shape and motion rather than absolute screen position.
+
+To ensure all inputs have the same shape, each sequence is standardized to a fixed length of 96 frames. Longer sequences are center-cropped, while shorter sequences are padded. The pipeline also computes velocity features by taking frame-to-frame differences, allowing the model to learn both static landmark positions and motion patterns over time.
+
+Finally, the processed features, labels, sequence lengths, class mappings, normalization statistics, and metadata are saved as reusable files. These outputs are used directly by the training notebooks, ensuring that the model receives clean, consistent, and deployment-ready input data.
 
 ---
 
