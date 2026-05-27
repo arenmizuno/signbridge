@@ -520,6 +520,11 @@ Dynamic quantization was explored for:
 
 ---
 
+# Product Demo
+[![Demo](demo.gif)](https://github.com/user-attachments/assets/c45a6920-68a0-4848-b37d-fcf4bf31d02c)
+
+---
+
 # Application Pipeline
 
 ```text
