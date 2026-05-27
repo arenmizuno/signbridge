@@ -204,6 +204,10 @@ Each processed sample is represented as a fixed-size sequence:
 - **Velocity features for motion**
 - **Numeric label corresponding to one of 250 ASL signs**
 
+Outputs are saved into:
+```text
+data/processed/
+```
 ---
 
 ## 2. Exploratory Data Analysis
