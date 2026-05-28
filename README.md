@@ -242,7 +242,7 @@ Additional statistics:
 - Each frame contains 708 landmark features from pose and hand keypoints
 
 Key findings:
-- Sequence lengths are highly right-skewed, with most signs occurring in shorter sequences while a large number of samples reach the 96-frame padding limit
+- Sequence lengths are highly right-skewed, with most signs occurring in shorter sequences while a few number of samples reach the 96-frame padding limit
 - Train, validation, and test distributions remain visually consistent, indicating stable participant-aware splitting
 - Feature standard deviation analysis revealed multiple feature groups with different variability ranges, reflecting differences between hand and pose landmark movement
 - Normalization successfully standardized the majority of landmark features while preserving temporal variation between signs
