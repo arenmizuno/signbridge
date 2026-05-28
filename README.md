@@ -75,7 +75,7 @@ This project uses the Kaggle ASL Signs competition dataset.
 Dataset:
 - 250 ASL sign classes
 - Landmark-based temporal sequences
-- Hand, pose, and facial keypoints
+- Hand and pose keypoints
 - Variable-length sign sequences
 
 Kaggle Competition:
@@ -239,12 +239,12 @@ Additional statistics:
 - No NaN values detected across any split
 - No infinite values detected across any split
 - Landmark sequences were padded/truncated to 96 frames
-- Each frame contains 708 landmark features from pose, hand, and facial keypoints
+- Each frame contains 708 landmark features from pose and hand keypoints
 
 Key findings:
 - Sequence lengths are highly right-skewed, with most signs occurring in shorter sequences while a large number of samples reach the 96-frame padding limit
 - Train, validation, and test distributions remain visually consistent, indicating stable participant-aware splitting
-- Feature standard deviation analysis revealed multiple feature groups with different variability ranges, reflecting differences between hand, pose, and facial landmark movement
+- Feature standard deviation analysis revealed multiple feature groups with different variability ranges, reflecting differences between hand and pose landmark movement
 - Normalization successfully standardized the majority of landmark features while preserving temporal variation between signs
 - No missing or corrupted numerical values were detected after preprocessing, confirming dataset integrity before model training
 
